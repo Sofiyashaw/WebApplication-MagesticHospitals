@@ -1,179 +1,98 @@
+<?php
+session_start();
+
+// Include the database connection file
+include("../include/connection.php");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Doctor's Dashboard</title>
+    <!-- Include any necessary CSS files here -->
+    <link rel="stylesheet" href="path/to/your/css/file.css">
 </head>
 <body>
-   <?php
-   include("../include/header.php");
+    <?php
+    // Include the header file
+    include("../include/header.php");
+    ?>
 
-   include("../include/connection.php");
-   ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" style="margin-left: -12px;">
+                <?php
+                // Include the sidebar file
+                include("sidenav.php");
+                ?>
+            </div>
+            <div class="col-md-10">
+                <div class="container-fluid">
+                    <br>
+                    <h5>Doctor's Dashboard</h5>
 
+                    <div class="row">
+                        <div class="col-md-3 my-2 mx-2" style="height: 150px; background-color: #3E3D53;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h5 class="text-white my-4">My Profile</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="profile.php"><i class="fa fa-user-circle fa-3x my-4" style="color: white;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<div class="container-fluid">
-   <div class="row">
-       <div class="col-md-2" style="margin-left: -12px;">
-          <?php include("sidenav.php") ?>
-       </div> 
-       <div class="col-md-10">
+                        <div class="col-md-3 my-2 mx-2" style="height: 150px; background-color: #594D5B;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <?php
+                                        // Retrieve total appointment count
+                                        $pat = mysqli_query($connect,"SELECT * FROM patient");
+                                        $patient = mysqli_num_rows($pat);
+                                        ?>
 
-          <h4 class="my-2">Admin Dashboard</h4>
-          
-          <div class="col-md-12 my-5">
-             <div class="row">
-                <div class="col-md-3 mx-2" style="height:130px; background-color: #655967;">
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                           <?php
+                                        <h5 class="text-white my-2" style="font-size: 30px;"><?php echo $patient; ?></h5>
+                                        <h5 class="text-white">Total</h5>
+                                        <h5 class="text-white">Patient</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="patient.php"><i class="fa fa-procedures fa-3x my-4" style="color: white;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                             $ad= mysqli_query($connect,"SELECT * FROM admin ");
+                        <div class="col-md-3 my-2 mx-2" style="height: 150px; background-color: #9897A9;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <?php
+                                        // Retrieve total appointment count
+                                        $app = mysqli_query($connect,"SELECT * FROM appointment WHERE status='Pendding'");
+                                        $appoint = mysqli_num_rows($app);
+                                        ?>
 
-                             $num= mysqli_num_rows($ad);
-                           ?>
-                            <h5 class="my-2 text-white " style="font-size:30px;">
-                              <?php
-
-                              echo $num;
-                              ?>
-
-                            </h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Admin</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="admin.php"> <i class="fa-solid fa-user-tie fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
+                                        <h5 class="text-white my-2" style="font-size: 30px;"><?php echo $appoint; ?> </h5>
+                                        <h5 class="text-white">Total</h5>
+                                        <h5 class="text-white">Appointment</h5>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="appointment.php"><i class="fa fa-calendar fa-3x my-4" style="color: white;"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="col-md-3 mx-2" style="height:130px; background-color: #787276;">
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                           <?php
-                             $doctor = mysqli_query($connect,"SELECT * FROM doctors WHERE status='Approved'");
-                             $num2 = mysqli_num_rows($doctor);
-
-
-                           ?>
-
-                            <h5 class="my-2 text-white " style="font-size:30px;">
-                              <?php
-                               echo $num2;
-                              ?>
-                               
-
-                            </h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Doctors</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="doctor.php"> <i class="fa-solid fa-user-doctor fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
-
-                </div>
-                <div class="col-md-3 mx-2" style="height:130px; background-color: #ADADC9;">
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                           <?php
-                           $p=mysqli_query($connect,"SELECT * FROM patient ");
-                           $pp = mysqli_num_rows($p);
-                           ?>
-                            <h5 class="my-2 text-white " style="font-size:30px;"><? php echo $pp; ?></h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Patients</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="patient.php"> <i class="fa-solid fa-bed-pulse fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
-
-
-                </div>
-                <div class="col-md-3 mx-2 my-2" style="height:130px; background-color: #ADADC9;">
-                   
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                           <?php
-                           $re =mysqli_query($connect, "SELECT * FROM  report");
-                           $rep =mysqli_num_rows($re);
-                           ?>
-                            <h5 class="my-2 text-white " style="font-size:30px;"> <?php echo $rep; ?></h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Report</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="report.php"> <i class="fa-solid fa-flag fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
-
-                </div>
-                <div class="col-md-3 mx-2 my-2" style="height:130px; background-color: #655967;">
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                           <?php
-                              $job = mysqli_query($connect,"SELECT * FROM doctors WHERE status='Pendding'");
-                              $num1 = mysqli_num_rows($job);
-
-
-                             ?>
-                            <h5 class="my-2 text-white " style="font-size:30px;">
-                              <?php
-                                echo $num1;
-
-
-                               ?></h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Job Request</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="job_request.php"> <i class="fa-solid fa-pen-to-square fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-3 mx-2 my-2" style="height:130px; background-color: #787276;">
-                   <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-8">
-                            <?php
-                           $in = mysqli_query($connect,"SELECT sum(amount_paid) as profit FROM income");
-                           $row = mysqli_fetch_array($in);
-                           $inc = $row['profit'];
-                           ?>
-                             
-                            <h5 class="my-2 text-white " style="font-size:30px;"><?php echo "$$inc" ?></h5>
-                            <h5 class="text-white">Total</h5>
-                            <h5 class="text-white">Income</h5>
-                         </div>
-                         <div class="col-md-4">
-                          <a href="income.php"> <i class="fa-solid fa-money-check-dollar fa-3x my-4" style="color:white;"> </i> </a>
-                            
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </div>            
-       </div>
-   </div>
-</div>            
-  
-
+    <!-- Include any necessary JS files here -->
+    <script src="path/to/your/js/file.js"></script>
 </body>
 </html>
