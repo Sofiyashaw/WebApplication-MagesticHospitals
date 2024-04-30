@@ -1,20 +1,9 @@
 <?php
+session_start();
+if(isset($_SESSION['patient'])) {
 
- session_start();
-
-
- if(isset($_SESSION['doctor'])){
-
-
- 	unset($_SESSION['doctor']);
-
-
- 	header("Location: ../index.php");
- }
-
-
-
-
-
-
+	unset($_SESSION['patient']);
+	
+	header("Location: ../index.php");
+}
 ?>
